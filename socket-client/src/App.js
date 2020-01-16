@@ -61,8 +61,7 @@ class App extends Component {
       this.setState({
         messages : this.state.messages.concat(data)
       })
-      e.target.value = '';
-      window.scrollBy(0, 100)
+      e.target.value = ''
     }
   }
   
@@ -136,7 +135,7 @@ class App extends Component {
 
             <ul className="messages">
 
-              {this.state.messages.map(x => 
+              {this.state.messages.slice(0).reverse().map(x => 
 
                 {if (x.type === 'message'){
                   return (
