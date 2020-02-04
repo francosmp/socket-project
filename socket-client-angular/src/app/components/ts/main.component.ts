@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import socketIOClient from "socket.io-client";
+import { Component, Renderer2, ElementRef } from '@angular/core'
+import socketIOClient from "socket.io-client"
 
 @Component({
   selector: 'main',
@@ -16,7 +16,8 @@ export class MainComponent {
   socket = socketIOClient('http://127.0.0.1:8000')
   messages = []
   chatPage = false
-  @ViewChild('div') div: ElementRef;
+
+  constructor(private renderer: Renderer2, private el: ElementRef) { }
 
   ngOnInit() {
     console.log('Init Main')
@@ -26,7 +27,6 @@ export class MainComponent {
       // Display the welcome message
       data.type = 'login';
       this.messages = this.messages.concat(data)
-      console.log(this.messages)
     });
 
     // Whenever the server emits 'new message', update the chat body
@@ -40,14 +40,12 @@ export class MainComponent {
       data.type = 'log';
       data.status = 'joined'
       this.messages = this.messages.concat(data)
-      console.log(this.messages)
     });
     // Whenever the server emits 'user left', log it in the chat body
     this.socket.on('user left', (data) => {
       data.type = 'log';
       data.status = 'left'
       this.messages = this.messages.concat(data)
-      console.log(this.messages)
     });
 
   }
@@ -70,7 +68,10 @@ export class MainComponent {
     this.addMessage()
   }
   addMessage() {
-    console.log(this.messages)
+    const p = this.renderer.createElement('p');
+    p.innerHTML = "add new"
+    this.renderer.appendChild(this.el.nativeElement, p)
+    console.log(this.el.nativeElement)
   }
 
 }
