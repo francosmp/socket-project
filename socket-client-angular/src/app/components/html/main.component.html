@@ -7,9 +7,9 @@
     <ul class="pages">
         <li class="chat page" *ngIf="chatPage">
             <div class="chatArea">
-                <ul class="messages"></ul>
+                <ul class="messages" #mensajes></ul>
             </div>
-            <input class="inputMessage" placeholder="Type here..." (keyup.enter)="sendMessage($event)"/>
+            <input class="inputMessage" placeholder="Type here..." (keyup.enter)="sendMessage($event)" autofocus />
         </li>
         <li class="login page" *ngIf="!chatPage">
             <div class="form">
